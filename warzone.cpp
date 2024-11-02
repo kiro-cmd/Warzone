@@ -13,7 +13,7 @@ int main() {
 	
 	Map m = MapLoader::testLoadMap("mapSourceFiles", "Earth.map");
 	// cout << m << endl;
-	cout << boolalpha << m.validate() << endl;
+	// cout << boolalpha << m.validate() << endl;
 	
 	return 0;
 }

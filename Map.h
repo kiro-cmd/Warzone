@@ -443,7 +443,7 @@ class Map
 					if (i != 0) { cout << ", "; }
 					cout << *continents[i].name;
 				}
-				cout << "Territories passed through: ";
+				cout << "Continents passed through: ";
 				cout << arrayToString(continentOdyssey, cOdysseyCount) << endl;
 				valid = false;
 			}
