@@ -1,3 +1,6 @@
+#ifndef ARRAYLIB_H
+#define ARRAYLIB_H
+
 #include <algorithm>
 #include <iostream>
 
@@ -30,11 +33,12 @@ static void push(T* &array, int &aSize, T elem) {
 // Array must not be empty
 template <typename T>
 static T pop(T* &array, int &aSize) {
+	if (aSize == 0) { cout << "Error! Array size must not be 0 in order to be popped!" << endl; }
+	
 	T toReturn = array[aSize - 1];
 	T* temp = new T[aSize - 1];
 	
 	for (int i = 0; i < aSize - 1;  i++) { temp[i] = array[i]; }
-	if (aSize == 0) { cout << "Error! Array size must not be 0 in order to be popped!" << endl; }
 	if (aSize != 0) { delete [] array; }
 	array = temp;
 	aSize = aSize - 1;
@@ -43,7 +47,127 @@ static T pop(T* &array, int &aSize) {
 }
 
 template <typename T>
-static string arrayToString(T* array, int aSize) {
+static void insert(T* &array, int &aSize, int index, T elem) {
+	if (0 > index || index > aSize) {
+		cout << "Error! Cannot insert element" << endl;
+		cout << "Index " << index << " is out of range of array of size " << aSize << "!" << endl;
+		return;
+	}
+	
+	if (index == aSize) {
+		push(array, aSize, elem);
+		return;
+	}
+	
+	T* temp = new T[aSize + 1];
+	int aIndex = 0;
+	for (int i = 0; i < aSize + 1; i++) {
+		if (i == index) {
+			temp[i] = elem;
+			continue;
+		}
+		temp[i] = array[aIndex];
+		aIndex++;
+	}
+	array = temp;
+	aSize = aSize + 1;
+}
+
+// Array must not be empty
+template <typename T>
+static T remove(T* &array, int &aSize, int index) {
+	if (0 > index || index >= aSize) {
+		cout << "Error! Cannot remove element." << endl;
+		cout <<	"Index " << index << " is out of range of array of size " << aSize << "!" << endl;
+		return T();
+	}
+	
+	if (index == aSize - 1) {
+		return pop(array, aSize);
+	}
+	
+	T toReturn = array[aSize - 1];
+	
+	T* temp = new T[aSize - 1];
+	int tIndex = 0;
+	for (int i = 0; i < aSize; i++) {
+		if (i == index) { continue; }
+		temp[tIndex] = array[i];
+		tIndex++;
+	}
+	array = temp;
+	aSize = aSize - 1;
+	
+	return toReturn;
+}
+
+// Move an element from index1 to index2
+// - All other elements remain in the same order.
+// - Every element from index1 to index2 are "shifted" over.
+template <typename T>
+static void shift(T* &array, int aSize, int index1, int index2) {
+	if (index1 < 0 || index1 >= aSize) {
+		cout << "Error! Cannot shift element." << endl;
+		cout <<	"Index " << index1 << " is out of range of array of size " << aSize << "!" << endl;
+	}
+	
+	if (index2 < 0 || index2 >= aSize) {
+		cout << "Error! Cannot shift element." << endl;
+		cout <<	"Index " << index2 << " is out of range of array of size " << aSize << "!" << endl;
+	}
+	
+	T toShift = array[index1];
+	T* temp = new T[aSize];
+	int aIndex = 0;
+	
+	for (int i = 0; i < aSize; i++) {
+		if (i == index1) {
+			if (index1 < index2) {
+				temp[i] = array[++aIndex];
+			} else {
+				temp[i] = array[aIndex++];
+			}
+		}
+		if (i == index2) {
+			temp[i] = toShift;
+			aIndex--;
+		}
+		if (i != index1 && i != index2) {
+			temp[i] = array[aIndex];
+		}
+		aIndex++;
+	}
+	
+	array = temp;
+}
+
+template <typename T>
+static void swap(T* &array, int aSize, int index1, int index2) {
+	if (index1 < 0 || index1 >= aSize) {
+		cout << "Error! Cannot swap element." << endl;
+		cout <<	"Index " << index1 << " is out of range of array of size " << aSize << "!" << endl;
+	}
+	
+	if (index2 < 0 || index2 >= aSize) {
+		cout << "Error! Cannot swap element." << endl;
+		cout <<	"Index " << index2 << " is out of range of array of size " << aSize << "!" << endl;
+	}
+	
+	T dummy = array[index1];
+	array[index1] = array[index2];
+	array[index2] = dummy;
+}
+
+template <typename T>
+static T* copy(T* array, int aSize) {
+	T* copy = new T[aSize];
+	for (int i = 0; i < aSize; i++) {
+		copy[i] = T(array[i]);
+	}
+	return copy;
+}
+
+static string arrayToString(string* array, int aSize) {
 	string s = "";
 	s.append("[");
 	for (int i = 0; i < aSize; i++) {
@@ -56,3 +180,5 @@ static string arrayToString(T* array, int aSize) {
 	
 	return s;
 }
+
+#endif

@@ -22,188 +22,46 @@ class Player {
 		string* orderList;               // Dynamic array of order types
 		
 		// Constructors
-		Player() {
-			name = "Unnamed Player";
-			territories = new string[0];      // Initialize empty vector for territories
-			hand = new string[0];             // Initialize empty vector for cards
-			orderList = new string[0];        // Initialize empty vector for orders
-		}
+		Player();
 		
 		// Assume that the arrays were made to populaate this class'
 		//   attributes, and can simply be pointed to.
-		Player(string name, string* tList, string* cList, string* oList) {
-			name = name; 
-			territories = tList;
-			hand = cList;
-			orderList = oList;
-		}
-		
-		Player(const Player& rhs) {
-			Player& crhs = const_cast <Player&>(rhs);
-			
-			name = string(crhs.name);
-
-			// Deep copies of all of the lists' elements
-			territories = new string[crhs.getTerritoriesCount()];
-			for (int i = 0; i < crhs.getTerritoriesCount(); i++) {
-				appendstring(string(crhs.territories[i]));  // Deep copy of each string
-			}
-
-			hand = new string[crhs.getHandCount()];
-			for (int i = 0; i < crhs.getHandCount(); i++) {
-				appendToHand(string(crhs.hand[i]));  // Deep copy of each string
-			}
-
-			orderList = new string[crhs.getOrderListCount()];
-			for (int i = 0; i < crhs.getOrderListCount(); i++) {
-				appendOrder(string(crhs.orderList[i]));  // Deep copy of each string
-			}
-		}
+		Player(string name, string* tList, string* cList, string* oList);
+		Player(const Player& rhs);
 
 		// Assignment operator (Deep Copy)
-		Player& operator=(const Player& rhs) {
-			if (this != &rhs) {
-				Player& crhs = const_cast <Player&>(rhs);
-				
-				name = string(crhs.name);
-
-				// Deep copies of all of the lists' elements
-				territories = new string[crhs.getTerritoriesCount()];
-				for (int i = 0; i < crhs.getTerritoriesCount(); i++) {
-					appendstring(string(crhs.territories[i]));  // Deep copy of each string
-				}
-
-				hand = new string[crhs.getHandCount()];
-				for (int i = 0; i < crhs.getHandCount(); i++) {
-					appendToHand(string(crhs.hand[i]));  // Deep copy of each string
-				}
-
-				orderList = new string[crhs.getOrderListCount()];
-				for (int i = 0; i < crhs.getOrderListCount(); i++) {
-					appendOrder(string(crhs.orderList[i]));  // Deep copy of each string
-				}
-			}
-			
-			return *this;
-		}
+		Player& operator=(const Player& rhs);
 		
 		// Destructor
-		~Player() {
-			delete territoriesCount;
-			delete [] territories;
-			delete handCount;
-			delete [] hand;
-			delete orderListCount;
-			delete [] orderList;
-		};
+		~Player();
 
 		// Methods to return certain player properties
 		
 		// This deep copies the entire list for now
-		string* territoriesToAttack() {
-			int len = ttaCount();
-			string* atList = new string[len];
-			for (int i = 0; i < len; i++) {
-				atList[i] = string(territories[i]);
-			}
-			return atList;
-		}
-		int ttaCount() {
-			return *territoriesCount;  // Placeholder, returns the list length
-		}
+		string* territoriesToAttack();
+		int ttaCount();
 		
-		string* territoriesToDefend() {
-			int len = ttdCount();
-			string* dtList = new string[len];
-			for (int i = 0; i < len; i++) {
-				dtList[i] = string(territories[i]);
-			}
-			return dtList;
-		}
-		int ttdCount() {
-			return *territoriesCount;  // Placeholder, returns the list length
-		}
+		string* territoriesToDefend();
+		int ttdCount();
 
-		void issueOrder(string order) {
-			appendOrder(order);  // Adds an order to the list
-		}
+		void issueOrder(string order);
 
-		string* getOrderList() {
-			return orderList;  // Returns order list
-		}
+		string* getOrderList();
 		
 		// array methods
-		int getTerritoriesCount() {
-			return *territoriesCount;
-		}
+		int getTerritoriesCount();
 		
-		void appendstring(string t) {
-			string* temp = new string[*territoriesCount + 1];
-			for (int i = 0; i < *territoriesCount; i++) {
-				temp[i] = territories[i];
-			}
-			temp[*territoriesCount] = string(t);
-			territories = temp;
-			*territoriesCount = *territoriesCount + 1;
-		}
+		void appendTerritoryName(string t);
 		
-		int getHandCount() {
-			return *handCount;
-		}
+		int getHandCount();
 		
-		void appendToHand(string c) {
-			string* temp = new string[*handCount + 1];
-			for (int i = 0; i < *handCount; i++) {
-				temp[i] = hand[i];
-			}
-			temp[*handCount] = string(c);
-			hand = temp;
-			*handCount = *handCount + 1;
-		}
+		void appendToHand(string c);
 		
-		int getOrderListCount() {
-			return *orderListCount;
-		}
+		int getOrderListCount();
 		
-		void appendOrder(string o) {
-			string* temp = new string[*orderListCount + 1];
-			for (int i = 0; i < *orderListCount; i++) {
-				temp[i] = orderList[i];
-			}
-			temp[*orderListCount] = string(o);
-			orderList = temp;
-			*orderListCount = *orderListCount + 1;
-		}
+		void appendOrder(string o);
 		
-		friend ostream& operator<<(ostream& out, const Player& P) {
-			Player& cP = const_cast <Player&>(P);
-			
-			out << "Player Name: " << cP.name << endl;
-
-			out << "Territories owned: ";
-			for (int i = 0; i < cP.getTerritoriesCount(); i++) {
-				if (i != 0) { out << ", "; }
-				out << cP.territories[i];
-			}
-			out << endl;
-
-			out << "Orders: ";
-			for (int i = 0; i < cP.getOrderListCount(); i++) {
-				if (i != 0) { out << ", "; }
-				out << cP.orderList[i];  // Get the order type (they will likely be stored by type(?))
-			}
-			out << endl;
-
-			// TO-DO: Find out what cards are and what they do
-			out << "Cards: ";
-			for (int i = 0; i < cP.getHandCount(); i++) {
-				if (i != 0) { out << ", "; }
-				out << cP.hand[i];  // Get the card type (they will likely be stored by type(?))
-			}
-			out << endl;
-
-			return out;
-		}
+		friend ostream& operator<<(ostream& out, const Player& P);
 };
 
 class PlayerDriver {
@@ -211,8 +69,8 @@ class PlayerDriver {
 		static Player* makeThreePlayers() {
 			Player p1 = Player();
 			p1.name = "Alice";
-			p1.appendstring("The North");
-			p1.appendstring("The South-West");
+			p1.appendTerritoryName("The North");
+			p1.appendTerritoryName("The South-West");
 			p1.appendToHand("4 of hearts");
 			p1.appendToHand("7 of clubs");
 			p1.appendOrder("Attack");
@@ -220,8 +78,8 @@ class PlayerDriver {
 			
 			Player p2 = Player();
 			p2.name = "Bob";
-			p2.appendstring("The North-East");
-			p2.appendstring("The South-East");
+			p2.appendTerritoryName("The North-East");
+			p2.appendTerritoryName("The South-East");
 			p2.appendToHand("Jack of spadess");
 			p2.appendToHand("10 of spadess");
 			p2.appendOrder("Attack");
@@ -230,8 +88,8 @@ class PlayerDriver {
 			
 			Player p3 = Player();
 			p3.name = "Charlie";
-			p3.appendstring("The North-West");
-			p3.appendstring("The South");
+			p3.appendTerritoryName("The North-West");
+			p3.appendTerritoryName("The South");
 			p3.appendToHand("2 of clubs");
 			p3.appendToHand("6 of diamonds");
 			p3.appendOrder("Defend");
