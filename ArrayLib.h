@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <random>
 
 using namespace std;
 
@@ -156,6 +157,23 @@ static void swap(T* &array, int aSize, int index1, int index2) {
 	T dummy = array[index1];
 	array[index1] = array[index2];
 	array[index2] = dummy;
+}
+
+template <typename T>
+static void shuffle(T* &array, int &aSize) {
+	random_device dev;
+	mt19937 rng(dev());
+	
+	T* temp = new T[aSize];
+	int randomNum;
+	for (int i = 0; i < aSize; i++) {
+		uniform_int_distribution<mt19937::result_type> dist(0, aSize - (i + 1));
+		randomNum = dist(rng);
+		temp[i] = array[randomNum];
+	}
+	
+	if (aSize > 0) { delete [] array; }
+	array = temp;
 }
 
 template <typename T>

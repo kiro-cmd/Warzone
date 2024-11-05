@@ -3,9 +3,9 @@
 
 #include <string>
 #include <iostream>
-#include "Map.h"
-#include "Card.h"
-#include "Order.h"
+#include "Map.cpp"
+#include "Card.cpp"
+#include "Order.cpp"
 
 using namespace std;
 

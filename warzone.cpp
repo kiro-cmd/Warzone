@@ -1,9 +1,9 @@
 #include <string>
 #include <iostream>
-#include "Map.h"
+#include "Map.cpp"
 #include "Player.cpp"
 #include "Order.cpp"
-#include "Card.h"
+#include "Card.cpp"
 #include "GameEngine.cpp"
 #include "ArrayLib.h"
 

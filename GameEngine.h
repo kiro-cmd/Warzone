@@ -11,7 +11,7 @@ class GameEngine {
 		int* statesCount;
 		string* current = new string("");
 		string* states = new string[0];
-		// This matrix specifies the commands needed to go from one command to the other.
+		// This matrix specifies the commands needed to go from one state to the other.
 		//   - n is the number of states.
 		//   - There are n + 1 rows and n columns.
 		//     - The extra row is to specify a command to end the program from a given state.
