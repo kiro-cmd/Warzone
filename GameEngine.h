@@ -4,10 +4,13 @@
 #include <iostream>
 #include <string>
 
+#include "CommandProcessor.cpp"
+
 using namespace std;
 
 class GameEngine {
 	public:
+		bool* running = new bool(false);
 		int* statesCount;
 		string* current = new string("");
 		string* states = new string[0];
@@ -17,9 +20,17 @@ class GameEngine {
 		//     - The extra row is to specify a command to end the program from a given state.
 		//   - commands[i][j] is the command to go from state i to state j.
 		//   - If commands[i][j] == "", then no transition is possible from state i to state j.
-		string** commands = new string*[0];
+		bool** canTrans = new bool*[0];
+		
+		CommandProcessor* cp = new CommandProcessor();
 		
 		GameEngine();
+		
+		~GameEngine();
+		
+		void command();
+		
+		int getStateIndex(string state);
 		
 		bool transition(string command);
 };

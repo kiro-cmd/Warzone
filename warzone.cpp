@@ -10,7 +10,13 @@
 using namespace std;
 
 int main() {
-	cout << "Hello World!" << endl;
+	// testing Game Engine and Commnd Processor
+	GameEngine ge;
+	*ge.running = true;
+	
+	while(*ge.running) {
+		ge.command();
+	}
 	
 	return 0;
 }

@@ -24,9 +24,9 @@ static void push(T* &array, int &aSize, T elem) {
 	T* temp = new T[aSize + 1];
 	
 	copy(array, array + aSize, temp);
-	if (aSize != 0) { delete [] array; }
+	delete [] array;
 	
-	temp[aSize] = elem;
+	temp[aSize] = T(elem);
 	array = temp;
 	aSize = aSize + 1;
 }
@@ -36,7 +36,7 @@ template <typename T>
 static T pop(T* &array, int &aSize) {
 	if (aSize == 0) { cout << "Error! Array size must not be 0 in order to be popped!" << endl; }
 	
-	T toReturn = array[aSize - 1];
+	T toReturn = T(array[aSize - 1]);
 	T* temp = new T[aSize - 1];
 	
 	for (int i = 0; i < aSize - 1;  i++) { temp[i] = array[i]; }
