@@ -29,9 +29,16 @@ class GameEngine {
 		~GameEngine();
 		
 		void command();
+		void command(string input);
 		
 		int getStateIndex(string state);
 		
 		bool transition(string command);
 };
+
+class FileCommandProcessorAdapter {
+	public:
+		static void readFromFile(string filename);
+};
+
 #endif // GAMEENGINE_H

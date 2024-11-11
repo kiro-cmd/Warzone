@@ -45,9 +45,4 @@ class CommandProcessor {
 		Command popCommand();
 };
 
-class FileCommandProcessorAdapter {
-	public:
-		static void readFromFile(string filename);
-};
-
 #endif

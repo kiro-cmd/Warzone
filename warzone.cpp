@@ -10,13 +10,18 @@
 using namespace std;
 
 int main() {
-	// testing Game Engine and Commnd Processor
+	/* testing Game Engine and Command Processor
 	GameEngine ge;
 	*ge.running = true;
 	
 	while(*ge.running) {
 		ge.command();
 	}
+	*/
+	
+	// reading commands from a file
+	FileCommandProcessorAdapter fcpa;
+	fcpa.readFromFile("fcpa_commands.txt");
 	
 	return 0;
 }

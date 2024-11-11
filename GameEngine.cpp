@@ -69,6 +69,13 @@ void GameEngine::command() {
 	*running = transition(effect);
 }
 
+void GameEngine::command(string input) {
+	cp->saveCommand(input, *current);
+	Command c = cp->popCommand();
+	string effect = string(*c.effect);
+	*running = transition(effect);
+}
+
 int GameEngine::getStateIndex(string state) {
 	if (state == "end") {
 		return *statesCount;
@@ -111,6 +118,22 @@ bool GameEngine::transition(string toState) {
 		*current = states[to];
 	}
 	return true;
+}
+
+// - The FileCommandProcessorAdapter -
+
+void FileCommandProcessorAdapter::readFromFile(string filename) {
+	string directory = "assets";
+	
+	ifstream MyReadFile(directory + "/" + filename);
+	string line = "";
+	
+	GameEngine ge;
+	*ge.running = true;
+	
+	while(getline(MyReadFile, line)) {
+		ge.command(line);
+	}
 }
 
 #endif

@@ -182,18 +182,4 @@ Command CommandProcessor::popCommand() {
 	return pop(commands, *commandsCount);
 }
 
-// - The FileCommandProcessorAdapter -
-
-void FileCommandProcessorAdapter::readFromFile(string filename) {
-	string directory = "assets";
-	
-	ifstream MyReadFile(directory + "/" + filename);
-	string line = "";
-	
-	cout << "Placeholder: printing lines for now." << endl;
-	while(getline(MyReadFile, line)) {
-		cout << line << endl;
-	}
-}
-
 #endif
